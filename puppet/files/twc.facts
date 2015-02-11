@@ -1,0 +1,4 @@
+group = ContentMarketingPortals
+application = omega
+env_type = vagrant
+application_component = author

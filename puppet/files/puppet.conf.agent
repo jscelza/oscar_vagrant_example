@@ -1,0 +1,25 @@
+[main]
+    archive_files = true
+    archive_file_server = master
+    group = pe-puppet
+    ignorecache = true
+    ignoreschedules = true
+    logdir = /var/log/pe-puppet
+    manifestdir=/manifests
+    modulepath = /opt/puppet/share/puppet/modules/modules:/modules
+    rundir = /var/run/pe-puppet
+    server = master
+    user  = pe-puppet
+    vardir = /var/opt/lib/pe-puppet
+    use_cached_catalog = false
+    usecacheonfailure = false
+
+[agent]
+    certname = @@HOSTNAME@@
+    classfile = $vardir/classes.txt
+    environment = production
+    localconfig = $vardir/localconfig
+    graph = true
+    graphdir = /graphdir
+    pluginsync = true
+    report = true

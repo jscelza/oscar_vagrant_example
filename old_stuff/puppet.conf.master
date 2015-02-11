@@ -1,0 +1,35 @@
+[main]
+    certname = master
+    vardir = /var/opt/lib/pe-puppet
+    logdir = /var/log/pe-puppet
+    rundir = /var/run/pe-puppet
+    modulepath = $confdir/environments/r10k/$environment/modules:/opt/puppet/share/puppet/modules
+    server = master
+    user  = pe-puppet
+    group = pe-puppet
+    archive_files = true
+    archive_file_server = master
+    use_cached_catalog = false
+
+
+[master]
+    certname = master
+    dns_alt_names = master,puppet
+    ca_name = 'Puppet CA generated on master at 2014-01-22 18:35:02 +0000'
+    reports = http,puppetdb
+    pluginsync = true
+    reporturl = https://localhost:443/reports/upload
+    node_terminus = exec
+    external_nodes = /etc/puppetlabs/puppet-dashboard/external_node
+    ssl_client_header = SSL_CLIENT_S_DN
+    ssl_client_verify_header = SSL_CLIENT_VERIFY
+    storeconfigs_backend = puppetdb
+    storeconfigs = true
+
+[agent]
+    report = true
+    classfile = $vardir/classes.txt
+    localconfig = $vardir/localconfig
+    graph = true
+    pluginsync = true
+    environment = production

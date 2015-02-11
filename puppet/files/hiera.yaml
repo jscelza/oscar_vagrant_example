@@ -1,0 +1,17 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: "/hieradata"
+:merge_behavior: deeper
+:hierarchy:
+  - fqdn/%{::fqdn}
+  - application/%{::application}/%{::env_type}/%{::application_component}
+  - application/%{::application}/%{::env_type}
+  - application/%{::application}
+  - group/%{::group}/application/%{::application}/%{::env_type}/%{::application_component}
+  - group/%{::group}/application/%{::application}/%{::env_type}
+  - group/%{::group}/application/%{::application}
+  - group/%{::group}
+  - datacenter/%{::datacenter}
+  - common

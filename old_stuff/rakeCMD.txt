@@ -1,0 +1,36 @@
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production nodeclass:add name=role::aem::author
+Class successfully created!
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:list
+master
+agent1
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:addclass name=agent1 class=role::aem::author
+Node classes successfully edited for agent1!
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:listclasses name=agent1
+role::aem::author
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:del name=agent1
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production nodeclass:add name=
+
+/opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:del name=agent1
+
+
+
+some commands
+
+find . \
+  -name "*.pp" \
+  -exec \
+    puppet-lint \
+        --no-80chars-check \
+        --log-format \
+        "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}" \
+        {} \
+  \;
+
+
+  puppet parser validate --render-as s
+  

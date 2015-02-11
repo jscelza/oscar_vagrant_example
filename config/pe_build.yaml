@@ -1,0 +1,6 @@
+---
+ pe_build:
+   download_root: "http://relic.lab.webapps.rr.com/artifactory/files-local/puppet/enterprise/"
+   version: "3.0.0"
+   #version: "3.1.2"
+   #version: "3.2.0"

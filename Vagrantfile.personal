@@ -1,0 +1,17 @@
+# Plug in check no longer is support.  You will need the following plug-ins for this to work
+# vagrant-cachier
+
+Vagrant.configure('2') do |config|
+    if Vagrant.has_plugin?("vagrant-cachier")
+      config.cache.auto_detect = true
+      config.cache.scope       = :box
+      ## Need to explicitly rsync the wget cache directory
+      #config.vm.synced_folder "~/.vagrant.d/cache/centos-65-x64-vbox436-nocm/wget", "/var/cache/wget", type: "rsync"
+      config.cache.enable :generic, {
+        "wget" => { cache_dir: "/var/cache/wget" },
+        "curl" => { cache_dir: "/var/cache/wget" },
+      }
+      config.cache.enable :gem
+      config.cache.enable :yum
+    end
+end

@@ -1,0 +1,55 @@
+---
+roles:
+  base:
+    private_networks:
+      - {ip: '0.0.0.0', auto_network: true }
+    provider:
+      type: virtualbox
+      customize:
+      - [modifyvm, !ruby/sym id, '--memory', 2048]
+
+  pe-puppet-master:
+    provisioners:
+      - type: hosts
+      - type: pe_bootstrap
+        role: :master
+        relocate_manifests: true
+        verbose: true
+      - type: shell
+        inline:
+          'cp -f /vagrant/puppet/files/hiera.yaml /etc/puppetlabs/puppet/;
+           cp -f /vagrant/puppet/files/puppet.conf.master /etc/puppetlabs/puppet/puppet.conf;
+           service pe-puppet restart;
+           service pe-httpd restart'
+    synced_folders:
+      - {host_path:  '~/pe_modules',              guest_path: '/modules'}
+      - {host_path:  './puppet/manifests',        guest_path: '/manifests'}
+      - {host_path:  '~/pe_hiera',                guest_path: '/hieradata'}
+      - {host_path:  './puppet/graphdir/master',  guest_path: '/graphdir'}
+
+  pe-puppet-agent-default:
+    provisioners:
+      - type: hosts
+      - type: pe_bootstrap
+        master: master
+        verbose: true
+      - type: shell
+        inline:
+          'cp /vagrant/puppet/files/twc.facts /etc/twc.facts;
+           sed -e s/@@HOSTNAME@@/${HOSTNAME}/g /vagrant/puppet/files/puppet.conf.agent > /etc/puppetlabs/puppet/puppet.conf;
+           service pe-puppet restart'
+
+  pe-puppet-agent-3.1.2:
+    provisioners:
+      - type: hosts
+      - type: pe_bootstrap
+        master: master
+        verbose: true
+        version: 3.1.2
+      - type: shell
+        inline:
+          'cp /vagrant/puppet/files/twc.facts /etc/twc.facts;
+           sed -e s/@@HOSTNAME@@/${HOSTNAME}/g /vagrant/puppet/files/puppet.conf.agent > /etc/puppetlabs/puppet/puppet.conf;
+           service pe-puppet restart'
+
+

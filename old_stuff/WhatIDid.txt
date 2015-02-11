@@ -1,0 +1,39 @@
+This process is scheduled to be automated later this week
+
+On your PC
+	Install Virtual Box
+	Install Vagrant 1.3.5  (http://www.vagrantup.com/downloads)
+		vagrant plugin install vagrant-pe_build 
+		vagrant plugin install vagrant-hosts
+		vagrant plugin install vagrant-cachier
+	gem install puppet  (don't use from site)
+	curl -sSL https://get.rvm.io | bash -s stable
+	gem install r10k
+	mkdir ~/pe_modules
+	mkdir ~/repos
+
+		NOTE:
+			Have my working Repos in ~/pe_modules
+			Hieradata needs to be on the same level as the puppetfile repo
+
+	PUPPETFILE=./Puppetfile PUPPETFILE_DIR=~/pe_modules r10k puppetfile install 
+
+	vagrant up master
+	vagrant up agent1
+
+On Puppet master:
+	cp /vagrant/configs/hiera.yaml /etc/puppetlabs/puppet/hiera.yaml
+	cp /vagrant/configs/puppet.conf.master /etc/puppetlabs/puppet/puppet.conf
+	service pe-puppet restart
+
+On agent 
+
+	cp /vagrant/configs/puppet.conf.agent1 /etc/puppetlabs/puppet/puppet.conf
+	service pe-puppet restart
+
+Links:
+
+https://ask.puppetlabs.com/question/67/unable-to-run-puppet-on-osx-mountain-lion/
+https://rvm.io/rvm/install
+
+

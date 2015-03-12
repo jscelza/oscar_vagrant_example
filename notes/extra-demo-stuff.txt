@@ -1,0 +1,9 @@
+  -
+    name: agent2
+    hostname: agent2
+    box: centos-65-x64-vbox436-nocm
+    synced_folders:
+      - {host_path:  './puppet/graphdir/agent2',   guest_path: '/graphdir'}
+    roles:
+      - base
+      - pe-puppet-agent-default

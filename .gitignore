@@ -3,3 +3,4 @@
 .DS_Store
 .orig
 **.dot
+puppet/r10k.yaml
